@@ -1,0 +1,83 @@
+git是一种版本控制系统
+github是一个代码共享和合作平台
+
+作用
+1.文件差异
+2.版本控制
+git commit & git log & git diff
+注意事项
+git config
+git 错误
+git checkout
+windows上设置git工作空间
+
+作用
+1.文件差异
+Windows---FC file1  file2
+linux---------diff  file1 file2
+2.版本控制
+
+git commit & git log & git diff
+规范使用commit功能，将特别有助于版本控制
+用git log查看所有的commit，下面显示每一个commit的内容结构（commit实际上是快照）
+commit  ID
+Author
+Date
+Describtion
+用git diff查找两个commit之间的差异，注意两个文件的先后顺序，要比较文件1与文件2中文件1做出的改变，命令为：git diff 文件2 文件1
+git log  --stat   (statistics)该选项会给出每次提交，所更改的文件的统计数据
+
+注意事项
+提交频率：不宜过大或者过小提交，为每项逻辑更改进行一次提交
+提交大小
+
+README文档：概述了项目的用途和使用方法
+
+什么是仓库repository：包含多个需要同时追踪的文件
+
+git config
+利用git下载下来的文件并不是真实的文件，而是下载整个历史记录文件
+git clone使得我们可以从某一台机器中拷贝文件到我们的机器中，它创建的是一个仓库克隆
+
+git config命令更改git中的设置
+git config --global  color.ui auto  设置颜色，便于查看
+
+git 错误
+
+
+git checkout
+git checkout   用于恢复之前的某个版本，但不同于SVN checkout。有什么用呢？可以运行某个commit来排查哪个commit出了问题。
+
+windows上设置git工作空间
+先下载两个文件：
+1.启动Tab功能： https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+2.启动提示git的功能：https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
+注意下载下来的后缀必须跟上面的一致
+定义一个.bash_profile文件，在你的工作目录下，内容如下：
+Fanatic d $ cat .bash_profile
+# Enable tab completion
+source /d/git-completion.bash
+
+# colors!
+green="\[\033[0;32m\]"
+blue="\[\033[0;34m\]"
+purple="\[\033[0;35m\]"
+reset="\[\033[0m\]"
+
+# Change command prompt
+source /d/git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
+# '\u' adds the name of the current user to the prompt
+# '\$(__git_ps1)' adds git-related stuff
+# '\W' adds  the name of the current directory
+export PS1="$purple\u$green\$(__git_ps1)$blue \W $ $reset"
+
+alias subl="E:/Program\ Files/Sublime\ Text\ 3/sublime_text.exe"
+配置文本编辑器sublime，首先找到sublime的位置为：E:/Program\ Files/Sublime\ Text\ 3/sublime_text.exe，上面的.bash_profile文件是最终版，已经添加了sublime文本编辑器的位置。
+运行下面的命令：
+ git config --global core.editor "'E:/Program\ Files/Sublime\ Text\ 3/sublime_text.exe' -n -w"
+注：-n 为打开新窗口，-w 表示在编辑器退出之后回到git
+ git config --global push.default upstream
+ git config --global merge.conflictstyle diff3
+退出GIT Bash，然后进入发现改变，运行subl .bash_profile文件将在sublime编辑器中打开。
+       注：针对Linux系统，做法类似，.bash_profile文件名应为.bashrc
