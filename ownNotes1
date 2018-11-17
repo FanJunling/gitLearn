@@ -1,0 +1,93 @@
+
+是什么使git资源库可以用作资源库？
+初始化git
+工作区、暂存区、repository
+对比工作区与暂存区中的差异
+添加及切换分支
+查看分支结构
+合并分支
+合并冲突与解决合并冲突
+
+是什么使git资源库可以用作资源库？
+        每一个repository都包含一个.git目录，当你初始化一个repository时，会新创建出来一个.git目录，表示这是一个仓库。
+
+初始化git
+在新建的目录内部，使用git init命令，创建新的Git仓库。此时会出现.git目录。分支变为master。创建出来的git仓库不会有commit，因为可能该目录下的内容，你并不想全部提交，还有就是无法写commit原因。 
+HEAD是git当前提交的名称
+git status可以看到最后提交后更改的文件
+
+上图显示：当前在master分支上，没有commit，且现在有3个文件没有被追踪（因为没有提交）。
+
+工作区、暂存区、repository
+工作区：就是修改文件的地方。修改已经提交到repository的文件，会提示*号。
+暂存区：可以将工作区中修改过的每个文件暂存在该地方，”git add 文件“命令，输入之后显示为master +
+repository：可以将暂存区的文件一并提交到git仓库，“git commit -m "description" ”命令，提交完之后不会有任何符号存在了
+
+提交到暂存区后：
+
+提交到repository后：
+
+
+对比工作区与暂存区中的差异
+直接用git diff，不需要加其他的参数。因为工作区与暂存区的文件不是commit，故没有id号。
+修改其中一个文件：
+
+
+
+表示working directory比staging area增减了什么
+用git diff --staged显示staging area文件比commit中文件增减了什么
+
+
+git reset --hard 放弃工作区以及暂存区的修改，并且无法恢复。																																								
+
+git checkout <commit_id>   分离HEAD
+git checkout master  离开“分离的HEAD”状态，回到master
+
+master主要分支
+添加及切换分支
+git branch  显示所有分支以及当前所在的分支
+git checkout <branchName>   切换分支到branchName
+
+分别修复完bug后，可以再合并
+
+查看分支结构 
+git log --graph <branchName>  
+git log --oneline <branchName>
+
+当你使用git checkout <commitID>时，系统会分离HEAD，但是不会创建出来新的分支。但是系统会提示你用git checkout -b <new-branch-name>，这样分离的HEAD也会创建出来新的分支了。
+
+合并分支
+
+合并分支之后，可以对不用的分支进行删除，放心，所有的commit都还在。合并的分支会根据时间戳进行排序。
+git merge master conis 但是我没有执行成功？？？
+git merge master coins -m " description"  merge到哪个分支取决于你当前在的分支，git里面其它操作也是这样，关键是当前所在的分支。
+
+git branch -d <branchName> 删除分支
+
+
+
+这是执行完merge命令后的输出，需要再git commit下，如下：
+
+一旦merge成功，就不可撤销了
+
+
+
+git show会展现最近commit较上一次的变化
+
+合并冲突与解决合并冲突
+合并冲突会发生是因为，相同的行两个分支做了不同的改动，如下：
+Fanatic (master) newGitFan $ git merge master easy -m "merge master and easy branch"
+Auto-merging test2.txt
+CONFLICT (content): Merge conflict in test2.txt
+Automatic merge failed; fix conflicts and then commit the result.
+Fanatic (master *+|MERGING) newGitFan $ cat test2.txt
+This is the txt2
+<<<<<<< HEAD
+change on master    HEAD所在分支的内容
+||||||| merged common ancestors
+the orgin content    原始内容
+=======
+change on easy    另一个分支的内容
+>>>>>>> easy
+
+解决合并冲突，可以直接在打开的文件中进行修改，记得删除那些提示不同的特殊字符。
